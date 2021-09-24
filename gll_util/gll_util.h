@@ -169,16 +169,16 @@ private:
  * @param texture_path 
  * @return GLuint 
  */
-bool create2DTexture(const std::string& texture_path, GLenum fmt, unsigned int& texture)
+inline bool create2DTexture(const std::string& texture_path, unsigned int& texture, GLenum fmt = GL_RGB, GLint st_warp = GL_LINEAR, GLint min_filter = GL_LINEAR_MIPMAP_LINEAR, GLint mag_filter = GL_LINEAR)
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
     // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, st_warp);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, st_warp);
     // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag_filter);
 
     // tell stb_image.h to flip loaded texture's on the y-axis.
     stbi_set_flip_vertically_on_load(true); 

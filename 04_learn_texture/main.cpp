@@ -35,27 +35,45 @@ int main(int argc, char* argv[])
         else if(type == 3){
             myshader.load("../textures/04.1.texture.vs", "../textures/04.3.texture.fs");
         }
+        else if(type == 4 || type == 5){
+            myshader.load("../textures/04.1.texture.vs", "../textures/04.4.texture.fs");
+        }
     }
     else{
         printf("Please set an input arguments range in [1,3]\n");
         return 0;
     }
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-    float vertices[] = {
-        // positions          // colors           // texture coords
-         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-    };
-    unsigned int indices[] = {  
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-    };
 
     gll::VAVBEBO vavbebo;
-    vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
+    if(type == 5){
+        float vertices[] = {
+            // positions          // colors           // texture coords
+            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f, // top right
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 0.2f  // top left 
+        };
+        unsigned int indices[] = {  
+            0, 1, 3, // first triangle
+            1, 2, 3  // second triangle
+        };      
+        vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
+    }
+    else{
+        float vertices[] = {
+            // positions          // colors           // texture coords
+            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+        };
+        unsigned int indices[] = {  
+            0, 1, 3, // first triangle
+            1, 2, 3  // second triangle
+        };
+        vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
+    }
+    // ------------------------------------------------------------------------
 
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
@@ -71,13 +89,13 @@ int main(int argc, char* argv[])
     // load and create a texture 
     // -------------------------
     unsigned int texture;
-    if( !gll::create2DTexture("../resources/container.jpg", GL_RGB, texture) ){
+    if( !gll::create2DTexture("../resources/container.jpg", texture) ){
         return -2;
     }
     unsigned int texture2;
-    if(type == 3){
+    if(type == 3 || type == 4){
         // texture 2
-        if( !gll::create2DTexture("../resources/awesomeface.png", GL_RGBA, texture2)) {
+        if( !gll::create2DTexture("../resources/awesomeface.png", texture2, GL_RGBA)) {
             return -2;
         }
 
@@ -99,11 +117,11 @@ int main(int argc, char* argv[])
         gll::render();
 
         // bind textures on corresponding texture units
-        if(type == 3){
+        if(type == 3 || type == 4){
             glActiveTexture(GL_TEXTURE0);
         }
         glBindTexture(GL_TEXTURE_2D, texture);
-        if(type == 3){
+        if(type == 3 || type == 4){
             glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, texture2);
         }
