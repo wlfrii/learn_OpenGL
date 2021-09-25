@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(learn_texture)
-
-
+project(learn_glm)
 
 add_executable(${PROJECT_NAME}
     main.cpp
