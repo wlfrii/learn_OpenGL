@@ -1,12 +1,15 @@
 # Learn OpenGL
 
 This repository stores the history codes when I learned OpenGL.
-A brilliant website for starting programming with OpenGL can be found in [LearnOpenGL](https://learnopengl-cn.github.io/).
+A brilliant website for starting programming with OpenGL can be found in [<b>LearnOpenGL</b>](https://learnopengl-cn.github.io/).
 
 ## Notes
 
+The useful webesit for learning OpenGL furtherly.
+- [OpenGL Tutorial - Useful Tools & Links](http://www.opengl-tutorial.org/miscellaneous/useful-tools-links/)
+
 To better understand GLSL, the website below are optional.
-  - [知乎：GL Shader Language（GLSL）详解-基础语法](https://zhuanlan.zhihu.com/p/349296191)
+- [知乎：GL Shader Language（GLSL）详解-基础语法](https://zhuanlan.zhihu.com/p/349296191)
 
 ### About practices
 
@@ -27,3 +30,6 @@ Note, the download GLM library not include the `ext` header files in the `glm.hp
 
 + [06_learn_coordinate](https://github.com/wlfrii/learn_OpenGL/tree/main/06_learn_coordinate) learned the components in GL, which includes _model_, _view_, _projection_. 
 A important function <font color=purple>GL_DEPTH_TEST</font> should be enable, which can create a __Z buffer__, also known as __Depth Buffer__, to determine whether a __texel__ should be rendered. When enable this function, <font color=purple>GL_DEPTH_BUFFER_BIT</font> should be clear before render each new frame.
+
++ [07_learn_camera](https://github.com/wlfrii/learn_OpenGL/tree/main/07_learn_camera) learned the use of view(camera) matrix, that can adjust the view direction in OpenGL. However, there are a lot of limitation when describe the rotation by Euler Angles.
+Note the z-axis of camera coordinate is directed from screen to viewer, so if we want the camera move away from the model, we need to increase z-axis value.
