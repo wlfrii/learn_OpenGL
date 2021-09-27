@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
     unsigned int texture2;
     if(type == 3 || type == 4){
         // texture 2
-        if( !gll::create2DTexture("../resources/awesomeface.png", texture2, GL_RGBA)) {
+        if( !gll::create2DTexture("../resources/awesomeface.png", texture2)) {
             return -2;
         }
 

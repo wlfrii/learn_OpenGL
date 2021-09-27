@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
         return -2;
     }
     unsigned int texture2;
-    if( !gll::create2DTexture("../resources/awesomeface.png", texture2, GL_RGBA)) {
+    if( !gll::create2DTexture("../resources/awesomeface.png", texture2)) {
         return -2;
     }
     //tell opengl for each sampler to which texture unit it belongs to (only has to be done once)

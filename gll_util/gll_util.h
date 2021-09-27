@@ -169,7 +169,7 @@ private:
  * @param texture_path 
  * @return GLuint 
  */
-inline bool create2DTexture(const std::string& texture_path, unsigned int& texture, GLenum fmt = GL_RGB, GLint st_warp = GL_LINEAR, GLint min_filter = GL_LINEAR_MIPMAP_LINEAR, GLint mag_filter = GL_LINEAR)
+inline bool create2DTexture(const std::string& texture_path, unsigned int& texture, GLint st_warp = GL_LINEAR, GLint min_filter = GL_LINEAR_MIPMAP_LINEAR, GLint mag_filter = GL_LINEAR)
 {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -184,9 +184,13 @@ inline bool create2DTexture(const std::string& texture_path, unsigned int& textu
     stbi_set_flip_vertically_on_load(true); 
     
     // load image, create texture and generate mipmaps
-    int width, height, nrChannels;
+    int width, height, channel;
     // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-    unsigned char *data = stbi_load(texture_path.c_str(), &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load(texture_path.c_str(), &width, &height, &channel, 0);
+    
+    GLenum fmt = GL_RGB;
+    if(channel == 4) fmt = GL_RGBA;
+
     if (data) {
         glTexImage2D(GL_TEXTURE_2D, 0, fmt, width, height, 0, fmt, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
