@@ -33,3 +33,4 @@ A important function <font color=purple>GL_DEPTH_TEST</font> should be enable, w
 
 + [07_learn_camera](https://github.com/wlfrii/learn_OpenGL/tree/main/07_learn_camera) learned the use of view(camera) matrix, that can adjust the view direction in OpenGL. However, there are a lot of limitation when describe the rotation by Euler Angles.
 Note the z-axis of camera coordinate is directed from screen to viewer, so if we want the camera move away from the model, we need to increase z-axis value.
+A very important details of projection matrix can be found in [<b>OpenGL Projection Matrix</b>](http://www.songho.ca/opengl/gl_projectionmatrix.html).

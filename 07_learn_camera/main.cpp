@@ -35,8 +35,15 @@ int main(int argc, char* argv[])
     gll::Shader myshader;
     myshader.load("../textures/06.1.texture.vs", "../textures/06.1.texture.fs");
     
-    unsigned char type = std::stoi(argv[1]);
-    if(type == 3){
+    unsigned char type = 0;
+    if(argc >= 2){
+        type = std::stoi(argv[1]);
+    }
+    else{
+        printf("Please set an input arguments range in [1,3]\n");
+        return 0;
+    }
+    if(type >= 3){
         glfwSetScrollCallback(window, scrollCallback);
         glfwSetCursorPosCallback(window, mouseCallback);
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -163,8 +170,8 @@ int main(int argc, char* argv[])
             }
             else if(type >= 2){
                 view = camera.getViewMatrix();
-                if(type == 3){
-                    projection = glm::perspective(glm::radians(camera.zoom), float(SCR_WIDTH)/float(SCR_HEIGHT), 0.2f, 100.0f);  
+                if(type >= 3){
+                    projection = glm::perspective(glm::radians(camera.getFOV()), float(SCR_WIDTH)/float(SCR_HEIGHT), 0.2f, 100.0f);  
                     myshader.setMat4f("projection", projection);
                 }
             }
