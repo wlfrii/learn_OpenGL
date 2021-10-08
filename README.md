@@ -34,3 +34,11 @@ A important function <font color=purple>GL_DEPTH_TEST</font> should be enable, w
 + [07_learn_camera](https://github.com/wlfrii/learn_OpenGL/tree/main/07_learn_camera) learned the use of view(camera) matrix, that can adjust the view direction in OpenGL. However, there are a lot of limitation when describe the rotation by Euler Angles.
 Note the z-axis of camera coordinate is directed from screen to viewer, so if we want the camera move away from the model, we need to increase z-axis value.
 A very important details of projection matrix can be found in [<b>OpenGL Projection Matrix</b>](http://www.songho.ca/opengl/gl_projectionmatrix.html).
+
++ [08_learn_color](https://github.com/wlfrii/learn_OpenGL/tree/main/08_learn_color) start to know the foundation of color and light in OpenGL world. 
+The symbol $*$ for two vector in OpenGL denotes elements-multiplication.
+
++ [09_learn_lighting](https://github.com/wlfrii/learn_OpenGL/tree/main/09_learn_lighting) learned that three important lighting components are required in OpenGL, which are AMBIENT_LIGHTING, DIFFUSE_LIGHTING, and SPECULAR_HIGHLIGHT.
+Secondly, the normal of the vertice are the key to calculate DIFFUSE_LIGHTING.
+The Normal Matrix is defined as "the transpose of the inverse of the left-top of the Model Matrix".
+Thirdly, the strength of AMBIENT_LIGHTING, SPECULAR_LIGHTING, and Shininess of Highlight can be furtherly understand after doing the practices.
