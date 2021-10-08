@@ -174,6 +174,24 @@ int main(int argc, char* argv[])
                     projection = glm::perspective(glm::radians(camera.getFOV()), float(SCR_WIDTH)/float(SCR_HEIGHT), 0.2f, 100.0f);  
                     myshader.setMat4f("projection", projection);
                 }
+
+                printf("T_view\n");
+                for(int i = 0; i < 4; i++){
+                    for(int j = 0; j < 4; j++){
+                        printf("%f,", view[i][j]);
+                    }
+                    printf("\n");
+                }
+                printf("T_projection\n");
+                for(int i = 0; i < 4; i++){
+                    for(int j = 0; j < 4; j++){
+                        printf("%f,", projection[i][j]);
+                    }
+                    printf("\n");
+                }
+                printf("\n");
+                static int count = 0;
+                if(++count >= 20) break;
             }
             myshader.setMat4f("view", view);
             

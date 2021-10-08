@@ -26,6 +26,7 @@ include_directories(
 )
 
 
+# Foundamental knowledge
 add_subdirectory(01_hello_window)
 add_subdirectory(02_hello_triangle)
 add_subdirectory(03_learn_shader)
@@ -33,3 +34,10 @@ add_subdirectory(04_learn_texture)
 add_subdirectory(05_learn_glm)
 add_subdirectory(06_learn_coordinate)
 add_subdirectory(07_learn_camera)
+
+# Lightness
+add_subdirectory(08_learn_color)
+
+
+# My Test
+add_subdirectory(test_ar)

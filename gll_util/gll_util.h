@@ -76,7 +76,7 @@ inline void initGLFW(uint8_t ver_major = 3, uint8_t ver_minor = 3)
  * @return true 
  * @return false 
  */
-inline GLFWwindow* createGLFWwindow(uint16_t win_width = 800, uint16_t win_height = 600, std::string win_name = "LearnOpenGL")
+inline GLFWwindow* createGLFWwindow(uint16_t win_width = 800, uint16_t win_height = 600, bool is_fullscreen = false, std::string win_name = "LearnOpenGL")
 {
     GLFWwindow* window = glfwCreateWindow(win_width, win_height, win_name.c_str(), nullptr, nullptr); 
 
@@ -91,6 +91,16 @@ inline GLFWwindow* createGLFWwindow(uint16_t win_width = 800, uint16_t win_heigh
         when the size of the window is changed. */ 
         glfwSetFramebufferSizeCallback(window, frameBufferSizeCallback);
     }
+    if(is_fullscreen){
+        int monitor_count = 0;
+        GLFWmonitor** monitor = is_fullscreen ? glfwGetMonitors(&monitor_count) : nullptr;
+        printf("[%d] monitors have been found.\n", monitor_count);
+        if(monitor_count >= 2){
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor[monitor_count-1]);
+            glfwSetWindowMonitor(window, monitor[monitor_count-1], 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+    }
+
     return window; 
 }
 
