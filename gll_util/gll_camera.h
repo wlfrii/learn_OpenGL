@@ -114,6 +114,11 @@ public:
         return _fov;
     }
 
+    const glm::vec3& getPosition() const
+    {
+        return _position;
+    }
+
     
 private:
     void updateCameraVectors()

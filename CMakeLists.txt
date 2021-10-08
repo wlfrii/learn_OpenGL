@@ -37,6 +37,7 @@ add_subdirectory(07_learn_camera)
 
 # Lightness
 add_subdirectory(08_learn_color)
+add_subdirectory(09_learn_lighting)
 
 
 # My Test
