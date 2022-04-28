@@ -24,7 +24,7 @@ The [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gll_util) will be
 <i>Here I tried to initialize GLAD before I created a GLFW window, but it is not work.</i>
 
 + [02_hello_triangle](https://github.com/wlfrii/learn_OpenGL/tree/main/02_hello_triangle) learned the basic skills about the GL shader. The most important part I got is the difference between VAO+VBO and VAO+VBO+EBO, and the application of those.
-For example, VAO+VBO -> [<font color=purple> _glDrawArrays_ </font>](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml), VAO+VBO+EBO -> [<font color=purple> _glDrawElements_</font>](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawElements.xhtml).
+For example, VAO+VBO -> [`glDrawArrays`](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml), VAO+VBO+EBO -> [<font color=purple> _glDrawElements_</font>](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawElements.xhtml).
 To draw in wireframe polygons, calling [<font color=purple> _glPolygonMode_</font>](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPolygonMode.xhtml).
 
 + [03_learn_shader](https://github.com/wlfrii/learn_OpenGL/tree/main/03_learn_shader), one of the most important topic I think, learned the use of __GLSL__, especially _uniform_ variable in vertex shader. What's more, I start to konw the usefullness of  [<font color=purple> _glVertexAttribPointer_</font>](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glVertexAttribPointer.xhtml) and [<font color=purple> _glEnableVertexAttribArray_</font>](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glEnableVertexAttribArray.xhtml).
