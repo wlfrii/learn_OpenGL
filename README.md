@@ -11,6 +11,13 @@ The useful webesit for learning OpenGL furtherly.
 To better understand GLSL, the website below are optional.
 - [知乎：GL Shader Language（GLSL）详解-基础语法](https://zhuanlan.zhihu.com/p/349296191)
 
+### Write in Front
+
+After learning the basic part of OpenGL, I find that there are excessive similar even same codes when doing the practices frome the online chapter, so I refactor those codes into [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gll_util) folder.
+
+The [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gll_util) will be very helpful to the later practices, including:
+ + [`gl_util::Window`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_window.h). A class degsigned to manage GLFWwindow.
+
 ### About practices
 
 + [01_hello_window](https://github.com/wlfrii/learn_OpenGL/tree/main/01_hello_window) learned the creation of an GL window. What should be __NOTICED__ is that the GLAD should be initialized before calling any GL interface.
