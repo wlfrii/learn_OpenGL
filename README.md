@@ -17,6 +17,9 @@ After learning the basic part of OpenGL, I find that there are excessive similar
 
 The [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gll_util) will be very helpful to the later practices, including:
  + [`gl_util::Window`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_window.h). A class degsigned to manage GLFWwindow.
+ + ['gl_util::VAVBEBO'](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_vavbebo.h) A manager for VAO, VBO, and EBO.
+ + ['gl_util::Shader'](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_shader.h) A manager for shader program object.
+ + ['gl_util::Texture2D'](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_texture.h) A manager for the GL texture.
 
 ### About practices
 
