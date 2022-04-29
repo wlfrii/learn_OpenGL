@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 
     // --------------- Prase inputs ---------------
     if (argc <= 1){
-        std::cout << proj_name << ":\n\tYou can input 3 or 4 integer to specify the background color of the window.\n" << "\t# 3 integer for RGB\n" << "\t# 4 integer for RGBA\n";
+        std::cout << proj_name << ":\n\tYou can input 3 or 4 integer (range in[0,255]) to specify the background color of the window.\n" << "\t# 3 integer for RGB\n" << "\t# 4 integer for RGBA\n";
     }
     else if(argc >= 4){
         unsigned char R = std::stoi(argv[1]);
