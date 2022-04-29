@@ -1,4 +1,4 @@
-#include "../gl_util/gl_window.h"
+#include "../gl_util/gl_util.h"
 #include <iostream>
 
 std::string proj_name = "01_hello_window";
@@ -26,6 +26,9 @@ int main(int argc, char* argv[])
     // Window show
     while(!window.shouldClose()){
         window.activate();
+
+        gl_util::clear();
+
         window.refresh();
     }
     window.release();
