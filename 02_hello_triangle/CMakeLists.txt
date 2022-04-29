@@ -6,6 +6,7 @@ project(hello_triangle)
 add_executable(${PROJECT_NAME}
     main.cpp
     ${GLAD_PATH}/src/glad.c
+    ${GL_UTIL_SRC}
 )
 
 # Add libraries

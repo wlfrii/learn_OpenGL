@@ -1,24 +1,31 @@
 #include <stdio.h>
-#include "../gll_util/gll_util.h"
+#include <iostream>
+#include "../gl_util/gl_util.h"
+
+std::string proj_name = "02_hello_triangle";
 
 int main(int argc, char* argv[])
 {
-    gll::initGLFW();
-    GLFWwindow* window = gll::createGLFWwindow();
-    if(!window) 
-        return -2;  
-    if( !gll::initGLAD() ) 
-        return -1;
+    gl_util::Window window(800, 600);
 
-    gll::Shader myshader;
+    gl_util::Shader myshader;
     myshader.load("../textures/02.1.texture.vs", "../textures/02.1.texture.fs"); 
 
     // Create vao, vbo, ebo to bind the vertices
-    gll::VAVBEBO vavbebo;
+    gl_util::VAVBEBO vavbebo;
     
+    // --------------------------- Prase inputs -----------------------------
     // Set up vertex data (and buffers) and configure vertex attributes based on the input
     unsigned int type = 0;
-    if(argc >= 2){
+    if(argc <= 1){
+        std::cout << proj_name << ":\n\tYou can input a integer to specify the different triangle model, the support interger are:\n" << 
+        "\t# 1, for render a single triangle with only VAO and VBO\n" << 
+        "\t# 2, for render rectangle consists of two triangles with VAO, VBO, and EBO\n" <<
+        "\t# 3, for polygons render of # 2\n" << 
+        "\t# 4, for render two triangles with VAO, VBO, and EBO\n";
+        return 0;
+    }
+    else{
         type = std::stoi(argv[1]);
         if(type == 1){ // ------------------------------
             float vertices[] = {
@@ -56,21 +63,15 @@ int main(int argc, char* argv[])
             vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
         }
     }
-    else{
-        printf("Please set an input arguments range in [1,4]\n");
-        return 0;
-    }
     // -------------------------------------------------------------------------
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-    // Activate the VertexArrtrib by the position
     glEnableVertexAttribArray(0);
 
-    while(!glfwWindowShouldClose(window)){
-        // Input
-        gll::processInput(window);
-        // Render
-        gll::render();
+    while(!window.shouldClose()){
+        gl_util::clear();
+
+        window.activate();
 
         // Draw
         myshader.use();
@@ -87,14 +88,11 @@ int main(int argc, char* argv[])
         }
         //glBindVertexArray(0); // unbind, but no need to unbind it every time
 
-        // Check the mouse/keyboard events
-        glfwPollEvents();
-        // Store the color of each pixel in GLFW window
-        glfwSwapBuffers(window);
+        window.refresh();
     }
 
     vavbebo.release();
     myshader.release();
-    glfwTerminate();
+    window.release();
     return 0;
 }
