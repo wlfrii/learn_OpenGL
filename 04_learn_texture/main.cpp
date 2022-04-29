@@ -1,78 +1,57 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
-// #define STB_IMAGE_IMPLEMENTATION
-// #include <stb_image.h>
-#include "../gll_util/gll_util.h"
+#include "../gl_util/gl_util.h"
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
-
+std::string proj_name = "04_learn_texture";
 
 int main(int argc, char* argv[])
 {
-    gll::initGLFW();
-    GLFWwindow* window = gll::createGLFWwindow(SCR_WIDTH, SCR_HEIGHT);
-    if (window == nullptr) {
-        return -1;
-    }
-    if(!gll::initGLAD())
-        return -2;
+    gl_util::Window window(800, 600);
 
-    gll::Shader myshader;
+    gl_util::Shader myshader;
 
+    // --------------------------- Prase inputs -----------------------------
     unsigned char type = 0;
     // Check input
-    if(argc >= 2){
-        type = std::stoi(argv[1]);
-        if(type == 1){
-            myshader.load("../textures/04.1.texture.vs", "../textures/04.1.texture.fs");         
-        }
-        else if(type == 2){
-            myshader.load("../textures/04.1.texture.vs", "../textures/04.2.texture.fs");
-        }
-        else if(type == 3){
-            myshader.load("../textures/04.1.texture.vs", "../textures/04.3.texture.fs");
-        }
-        else if(type == 4 || type == 5){
-            myshader.load("../textures/04.1.texture.vs", "../textures/04.4.texture.fs");
-        }
-    }
-    else{
-        printf("Please set an input arguments range in [1,3]\n");
+    if(argc < 2)
+    {
+        std::cout << proj_name << ":\n\tYou can input a integer to specify the different shader model, the support interger are:\n" << 
+        "\t# 1, set vertices, colors, and texcoords when binding VAVBEBO, and transmit texcoords from vertex shader to fragment shader. Then render a texture (from image) w.r.t texcoords\n" << 
+        "\t# 2, based on # 1, transmit color from vertex shader to fragment shader, and combine the texels color and vertices color\n" <<
+        "\t# 3, based on # 1, render two texture w.r.t texcoords and mix the color in each pixel by 0.8*texture1 + 0.2*texture2\n" << 
+        "\t# 4, opposite the direction of texture2 in # 3\n";
         return 0;
     }
-
-    gll::VAVBEBO vavbebo;
-    if(type == 5){
-        float vertices[] = {
-            // positions          // colors           // texture coords
-            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   2.0f, 2.0f, // top right
-            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   2.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 0.2f  // top left 
-        };
-        unsigned int indices[] = {  
-            0, 1, 3, // first triangle
-            1, 2, 3  // second triangle
-        };      
-        vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
-    }
     else{
-        float vertices[] = {
-            // positions          // colors           // texture coords
-            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
-        };
-        unsigned int indices[] = {  
-            0, 1, 3, // first triangle
-            1, 2, 3  // second triangle
-        };
-        vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
+        type = std::stoi(argv[1]);
+        if(type == 1){
+            myshader.load("../shaders/04.1.vs", "../shaders/04.1.fs");         
+        }
+        else if(type == 2){
+            myshader.load("../shaders/04.1.vs", "../shaders/04.2.fs");
+        }
+        else if(type == 3){
+            myshader.load("../shaders/04.1.vs", "../shaders/04.3.fs");
+        }
+        else if(type == 4 || type == 5){
+            myshader.load("../shaders/04.1.vs", "../shaders/04.4.fs");
+        }
     }
+    // -------------------------------------------------------------------------
+
+    gl_util::VAVBEBO vavbebo;
+    float vertices[] = {
+        // positions          // colors           // texture coords
+        0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+        0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+    };
+    unsigned int indices[] = {  
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
+    };
+    vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
+
     // ------------------------------------------------------------------------
 
     // position attribute
@@ -88,42 +67,32 @@ int main(int argc, char* argv[])
 
     // load and create a texture 
     // -------------------------
-    unsigned int texture;
-    if( !gll::create2DTexture("../resources/container.jpg", texture) ){
-        return -2;
-    }
-    unsigned int texture2;
+    gl_util::Texture2D texture0(0);
+    if(!texture0.loadImage("../resources/container.jpg")) return -2;
+    gl_util::Texture2D texture1(1);
     if(type == 3 || type == 4){
-        // texture 2
-        if( !gll::create2DTexture("../resources/awesomeface.png", texture2)) {
-            return -2;
-        }
-
+        if(!texture1.loadImage("../resources/awesomeface.png")) return -3;
+    
         //tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
         myshader.use(); // don't forget to activate/use the shader before setting uniforms!
         // either set it manually like so:
-        glUniform1i(glGetUniformLocation(myshader.ID, "texture1"), 0);
+        myshader.setInt("texture1", texture0.ID());
+        // glUniform1i(glGetUniformLocation(myshader.ID, "texture1"), 0);
         // or set it via the texture class
-        myshader.setInt("texture2", 1);
+        myshader.setInt("texture2", texture1.ID());
     }  
 
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
+    while (!window.shouldClose())
     {
-        // input
-        gll::processInput(window);
-        // render
-        gll::render();
+        window.activate();
+        window.clear();
 
         // bind textures on corresponding texture units
+        texture0.bind();
         if(type == 3 || type == 4){
-            glActiveTexture(GL_TEXTURE0);
-        }
-        glBindTexture(GL_TEXTURE_2D, texture);
-        if(type == 3 || type == 4){
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, texture2);
+            texture1.bind();
         }
 
         // render container
@@ -131,14 +100,11 @@ int main(int argc, char* argv[])
         vavbebo.bindVertexArray();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        window.refresh();
     }
 
     vavbebo.release();
-
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    glfwTerminate();
+    window.release(); 
+    
     return 0;
 }

@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     gl_util::Window window(800, 600);
 
     gl_util::Shader myshader;
-    myshader.load("../textures/02.1.texture.vs", "../textures/02.1.texture.fs"); 
+    myshader.load("../shaders/02.1.vs", "../shaders/02.1.fs"); 
 
     // Create vao, vbo, ebo to bind the vertices
     gl_util::VAVBEBO vavbebo;

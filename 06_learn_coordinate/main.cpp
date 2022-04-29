@@ -1,30 +1,32 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
-#include "../gll_util/gll_util.h"
-#include <glm/glm.hpp>
+#include "../gl_util/gl_util.h"
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+std::string proj_name = "06_learn_coordinate";
 
+const unsigned int WIN_WIDTH = 800;
+const unsigned int WIN_HEIGHT = 600;
 
 int main(int argc, char* argv[])
 {
-    gll::initGLFW();
-    GLFWwindow* window = gll::createGLFWwindow(SCR_WIDTH, SCR_HEIGHT);
-    if (window == nullptr) {
-        return -1;
-    }
-    if(!gll::initGLAD())
-        return -2;
-
-    gll::Shader myshader;
-    myshader.load("../textures/06.1.texture.vs", "../textures/06.1.texture.fs");
+    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT);
     
-    gll::VAVBEBO vavbebo;
+    gl_util::Shader myshader;
+    myshader.load("../shaders/06.1.vs", "../shaders/06.1.fs");
+    
+    gl_util::VAVBEBO vavbebo;
+    // --------------------------- Prase inputs -----------------------------
     unsigned char type = 0;
-    if(argc >= 2){
+    // Check input
+    if(argc < 2)
+    {
+        std::cout << proj_name << ":\n\tYou can input a integer to specify the different shader model, the support interger are:\n" << 
+        "\t# 1, render two texture, and set model, view, projection for the vertices\n" << 
+        "\t# 2, render a square consist of 36 vertices and texcoords and rotated with time goes on. Each plane of the square is rendered with two textures. NOTE, this dynamic square may looks weird\n" <<
+        "\t# 3, based on # 2, enable the depth test so that OpenGL can know which pixel should be show and which should be hidden\n" <<
+        "\t# 4, based on # 3, change the position of square, then render 10 squares simultaneously\n";
+        return 0;
+    }
+    else{
         type = std::stoi(argv[1]);
         if(type == 1){
             float vertices[] = {
@@ -42,6 +44,7 @@ int main(int argc, char* argv[])
         }
         else if(type >= 2){
             float vertices[] = {
+                // positions         // texture coords
                 -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
                 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
                 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
@@ -88,15 +91,10 @@ int main(int argc, char* argv[])
 
             if(type >= 3){
                 // glEnable() and glDisable() allows we enable or disable a function
-                glEnable(GL_DEPTH_TEST);
+                window.enableDepthTest();
             }
         }  
     }
-    else{
-        printf("Please set an input arguments range in [1,2]\n");
-        return 0;
-    }
-
     // ------------------------------------------------------------------------
 
     // position attribute
@@ -109,50 +107,38 @@ int main(int argc, char* argv[])
 
     // load and create a texture 
     // -------------------------
-    unsigned int texture;
-    if( !gll::create2DTexture("../resources/container.jpg", texture) ){
-        return -2;
-    }
-    unsigned int texture2;
-    if( !gll::create2DTexture("../resources/awesomeface.png", texture2)) {
-        return -2;
-    }
+    gl_util::Texture2D texture0(0);
+    if( !texture0.loadImage("../resources/container.jpg"))  return -2;
+    gl_util::Texture2D texture1(1);
+    if( !texture1.loadImage("../resources/awesomeface.png"))  return -2;
     //tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     myshader.use(); // don't forget to activate/use the shader before setting uniforms!
-    myshader.setInt("texture1", 0);
-    myshader.setInt("texture2", 1);
+    myshader.setInt("texture1", texture0.ID());
+    myshader.setInt("texture2", texture1.ID());
 
     
     glm::mat4 I4(1.0f), model, view, projection;
-    if(type == 1){
-        model = glm::rotate(I4, glm::radians(-55.0f), glm::vec3(1.0, 0.0, 0.0));
-        view = glm::translate(I4, glm::vec3(0.0f, 0.0f, -3.0f));
-        projection = glm::perspective(glm::radians(45.0f), float(SCR_WIDTH)/float(SCR_HEIGHT), 0.2f, 100.0f);
-        myshader.setMat4f("model", model);
-        myshader.setMat4f("view", view);
-        myshader.setMat4f("projection", projection);
-    }
-
+    model = glm::rotate(I4, glm::radians(-55.0f), glm::vec3(1.0, 0.0, 0.0));
+    myshader.setMat4f("model", model);
+    
     view = glm::translate(I4, glm::vec3(0.0f, 0.0f, -3.0f));
     myshader.setMat4f("view", view);
 
-    projection = glm::perspective(glm::radians(45.0f), float(SCR_WIDTH)/float(SCR_HEIGHT), 0.2f, 100.0f);  
+    projection = glm::perspective(glm::radians(45.0f), float(WIN_WIDTH)/float(WIN_HEIGHT), 0.2f, 100.0f);  
     myshader.setMat4f("projection", projection);
     
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
+    while (!window.shouldClose())
     {
-        // input
-        gll::processInput(window);
-        // render
-        gll::render();
+        window.activate();
+
+        // The depth buffer will also be clear once we enable depth test
+        window.clear();
 
         // bind textures on corresponding texture units
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2);
+        texture0.bind();
+        texture1.bind();
         
         // render container
         myshader.use();
@@ -161,10 +147,6 @@ int main(int argc, char* argv[])
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         }
         else if(type == 2 || type == 3){
-            if(type == 3){
-                // Since we start the depth test, we need to clear the depth buffer of last frame
-                glClear(GL_DEPTH_BUFFER_BIT);
-            }
             model = glm::rotate(I4, glm::radians(50.0f)*float(glfwGetTime()), glm::vec3(0.5, 1.0, 0.0));
             myshader.setMat4f("model", model);    
         
@@ -172,7 +154,6 @@ int main(int argc, char* argv[])
         }
         else if(type >= 4)
         {
-            glClear(GL_DEPTH_BUFFER_BIT);
             glm::vec3 cubePositions[] = {
                 glm::vec3( 0.0f,  0.0f,  0.0f), 
                 glm::vec3( 2.0f,  5.0f, -15.0f), 
@@ -199,14 +180,10 @@ int main(int argc, char* argv[])
                 glDrawArrays(GL_TRIANGLES, 0, 36);
             }
         }
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        window.refresh();
     }
-
     vavbebo.release();
-
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    glfwTerminate();
+    window.release();
+    
     return 0;
 }

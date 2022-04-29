@@ -25,16 +25,16 @@ int main(int argc, char* argv[])
     else{
         type = std::stoi(argv[1]);
         if(type == 1){
-            myshader.load("../textures/03.1.texture.vs", "../textures/03.1.texture.fs");
+            myshader.load("../shaders/03.1.vs", "../shaders/03.1.fs");
         }
         else if(type == 2){
-            myshader.load("../textures/03.1.texture.vs", "../textures/03.2.texture.fs"); 
+            myshader.load("../shaders/03.1.vs", "../shaders/03.2.fs"); 
         }
         else if(type == 3){
-            myshader.load("../textures/03.3.texture.vs", "../textures/03.3.texture.fs"); 
+            myshader.load("../shaders/03.3.vs", "../shaders/03.3.fs"); 
         }
         else if(type == 4){
-            myshader.load("../textures/03.4.texture.vs", "../textures/03.3.texture.fs"); 
+            myshader.load("../shaders/03.4.vs", "../shaders/03.3.fs"); 
         }
     }
     // -------------------------------------------------------------------------

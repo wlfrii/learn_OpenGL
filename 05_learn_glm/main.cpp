@@ -1,26 +1,15 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
-#include "../gll_util/gll_util.h"
-#include <glm/glm.hpp>
+#include "../gl_util/gl_util.h"
 
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+std::string proj_name = "05_learn_glm";
 
 
 int main(int argc, char* argv[])
 {
-    gll::initGLFW();
-    GLFWwindow* window = gll::createGLFWwindow(SCR_WIDTH, SCR_HEIGHT);
-    if (window == nullptr) {
-        return -1;
-    }
-    if(!gll::initGLAD())
-        return -2;
+    gl_util::Window window(800, 600);
 
-    gll::Shader myshader;
-    myshader.load("../textures/05.1.texture.vs", "../textures/05.1.texture.fs");
+    gl_util::Shader myshader;
+    myshader.load("../shaders/05.1.vs", "../shaders/05.1.fs");
 
     float vertices[] = {
         // positions         // texture coords
@@ -33,7 +22,7 @@ int main(int argc, char* argv[])
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
-    gll::VAVBEBO vavbebo;
+    gl_util::VAVBEBO vavbebo;
     vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
 
     // ------------------------------------------------------------------------
@@ -48,44 +37,39 @@ int main(int argc, char* argv[])
 
     // load and create a texture 
     // -------------------------
-    unsigned int texture;
-    if( !gll::create2DTexture("../resources/container.jpg", texture) ){
-        return -2;
-    }
-    unsigned int texture2;
-    if( !gll::create2DTexture("../resources/awesomeface.png", texture2)) {
-        return -2;
-    }
+    gl_util::Texture2D texture0(0);
+    if(!texture0.loadImage("../resources/container.jpg")) return -2;
+    gl_util::Texture2D texture1(1);
+    if(!texture1.loadImage("../resources/awesomeface.png")) return -3;
+    
     //tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     myshader.use(); // don't forget to activate/use the shader before setting uniforms!
-    myshader.setInt("texture1", 0);
-    myshader.setInt("texture2", 1);
+    myshader.setInt("texture1", texture0.ID());
+    myshader.setInt("texture2", texture1.ID());
 
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
+    while (!window.shouldClose())
     {
-        // input
-        gll::processInput(window);
-        // render
-        gll::render();
+        window.activate();
+        window.clear();
 
         // bind textures on corresponding texture units
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2);
+        texture0.bind();
+        texture1.bind();
 
+        // render container
+        myshader.use();
+        vavbebo.bindVertexArray();
+        
+        // Draw left top box
         glm::mat4 trans(1.0);
         trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
         trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0, 0.0, 1.0));
         myshader.setMat4f("transform", trans);
-        
-        // render container
-        myshader.use();
-        vavbebo.bindVertexArray();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+        // Render right down box
         trans = glm::mat4(1.0f);
         trans = glm::translate(trans, glm::vec3(-0.5, 0.5, 0.0));
         float scale = sin(glfwGetTime());
@@ -94,13 +78,11 @@ int main(int argc, char* argv[])
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        window.refresh();
     }
 
     vavbebo.release();
+    window.release();
 
-    // glfw: terminate, clearing all previously allocated GLFW resources.
-    glfwTerminate();
     return 0;
 }
