@@ -27,8 +27,8 @@ int main(int argc, char* argv[])
     while(!window.shouldClose()){
         window.activate();
 
-        gl_util::clear();
-
+        window.clear();
+        
         window.refresh();
     }
     window.release();

@@ -1,26 +1,31 @@
 #include <stdio.h>
-#include "../gll_util/gll_util.h"
+#include <iostream>
+#include "../gl_util/gl_util.h"
+
+std::string proj_name = "03_learn_shader";
 
 int main(int argc, char* argv[])
 {
-    gll::initGLFW();
-    GLFWwindow* window = gll::createGLFWwindow();
-    if(!window) 
-        return -2;  
-    if( !gll::initGLAD() ) 
-        return -1;
+    gl_util::Window window(800, 600);
 
-    gll::Shader myshader;
-
-    // Create vao, vbo, ebo to bind the vertices
-    gll::VAVBEBO vavbebo;
+    gl_util::Shader myshader;
+    gl_util::VAVBEBO vavbebo;
     
-    // Check input
+    // --------------------------- Prase inputs -----------------------------
     unsigned char type = 0;
-    if(argc >= 2){
+    if(argc < 2)
+    {
+        std::cout << proj_name << ":\n\tYou can input a integer to specify the different shader model, the support interger are:\n" << 
+        "\t# 1, use default color in vertex shader, and transmit it to fragment shader\n" << 
+        "\t# 2, set dynamic color to fragment shader\n" <<
+        "\t# 3, set color when bind VAVBEBO and transmit the color from vertex shader to fragment shader\n" << 
+        "\t# 4, based on 3, set deviation for x position of object in vertex shader\n";
+        return 0;
+    }
+    else{
         type = std::stoi(argv[1]);
         if(type == 1){
-            myshader.load("../textures/03.1.texture.vs", "../textures/03.1.texture.fs"); 
+            myshader.load("../textures/03.1.texture.vs", "../textures/03.1.texture.fs");
         }
         else if(type == 2){
             myshader.load("../textures/03.1.texture.vs", "../textures/03.2.texture.fs"); 
@@ -31,10 +36,6 @@ int main(int argc, char* argv[])
         else if(type == 4){
             myshader.load("../textures/03.4.texture.vs", "../textures/03.3.texture.fs"); 
         }
-    }
-    else{
-        printf("Please set an input arguments range in [1,4]\n");
-        return 0;
     }
     // -------------------------------------------------------------------------
     
@@ -67,21 +68,18 @@ int main(int argc, char* argv[])
     }
     // -------------------------------------------------------------------------
 
-    // as we only have a single shader, we could also just activate our shader once beforehand if we want to 
+    // As we only have a single shader, we could also just activate our shader once beforehand if we want to 
     myshader.use();
 
-    while(!glfwWindowShouldClose(window)){
-        // Input
-        gll::processInput(window);
-        // Render
-        gll::render();
+    while(!window.shouldClose()){
+        gl_util::clear();
+        window.activate();
 
         // Draw
         if(type == 2){
             float time_val = glfwGetTime();
             float green_val = (sin(time_val) / 2.0f + 0.5f);
-            int vertex_color_location = glGetUniformLocation(myshader.ID, "my_color");
-            glUniform4f(vertex_color_location, 0.0f, green_val, 0.0f, 1.0f);
+            myshader.setFloat4("my_color", 0.0f, green_val, 0.0f, 1.0f);
         }
         else if(type == 4){
             myshader.setFloat("offset_x", 0.3f);
@@ -89,12 +87,11 @@ int main(int argc, char* argv[])
         vavbebo.bindVertexArray(); 
         glDrawArrays(GL_TRIANGLES, 0, 3); // use this when only VAO exist
 
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        window.refresh();
     }
-
     vavbebo.release();
     myshader.release();
-    glfwTerminate();
+    window.release();
+
     return 0;
 }
