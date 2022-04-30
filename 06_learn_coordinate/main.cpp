@@ -23,7 +23,8 @@ int main(int argc, char* argv[])
         "\t# 1, render two texture, and set model, view, projection for the vertices\n" << 
         "\t# 2, render a square consist of 36 vertices and texcoords and rotated with time goes on. Each plane of the square is rendered with two textures. NOTE, this dynamic square may looks weird\n" <<
         "\t# 3, based on # 2, enable the depth test so that OpenGL can know which pixel should be show and which should be hidden\n" <<
-        "\t# 4, based on # 3, change the position of square, then render 10 squares simultaneously\n";
+        "\t# 4, based on # 3, change the position of square, then render 10 fixed squares simultaneously\n" << 
+        "\t# 5, based on # 3, change the position of square, then render 10 rotated squares simultaneously\n";
         return 0;
     }
     else{
@@ -169,13 +170,15 @@ int main(int argc, char* argv[])
             for(unsigned int i = 0; i < 10; i++)
             {
                 model = glm::translate(I4, cubePositions[i]);
-                float angle = 20.0f * i; 
                 float k = 1.0f;
-                if(type >= 5 && i % 3 == 0) {
+                if(type >= 5) {
                     k = static_cast<float>(glfwGetTime());
                 }
-                model = glm::rotate(model, glm::radians(angle) * k, glm::vec3(1.0f, 0.3f, 0.5f));
+                float angle = glm::radians(20.0f * (i + 1)) * k; 
+                model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
                 myshader.setMat4f("model", model);
+
+                //gl_util::print("Model", model);
 
                 glDrawArrays(GL_TRIANGLES, 0, 36);
             }

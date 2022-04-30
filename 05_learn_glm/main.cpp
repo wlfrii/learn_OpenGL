@@ -6,6 +6,8 @@ std::string proj_name = "05_learn_glm";
 
 int main(int argc, char* argv[])
 {
+    std::cout << proj_name << "\n\tDisplay two mixed textures, one in left top and another located at right down. Both the mixed texutures are active, since a transformation matrix parameterized by time is set to transform the vertices position\n";
+
     gl_util::Window window(800, 600);
 
     gl_util::Shader myshader;
