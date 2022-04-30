@@ -29,27 +29,27 @@ include_directories(
 file(GLOB GL_UTIL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/gl_util/*.cpp)
 
 # The switch to control the compilation
-option(BUILD_CHAPTER_ALL "build all the project" OFF)
+option(BUILD_CHAPTER_ALL "build all the project" ON)
 option(BUILD_CHAPTER1 "build chapter #1" OFF)
 option(BUILD_CHAPTER2 "build chapter #2" ON)
 
 # Chapter #1: Foundamental knowledge
 if(BUILD_CHAPTER_ALL OR BUILD_CHAPTER1)
     message("Build targets in Chapter #1")
-    add_subdirectory(01_hello_window)
-    add_subdirectory(02_hello_triangle)
-    add_subdirectory(03_learn_shader)
-    add_subdirectory(04_learn_texture)
-    add_subdirectory(05_learn_glm)
-    add_subdirectory(06_learn_coordinate)
-    add_subdirectory(07_learn_camera)
+    add_subdirectory(1_01_hello_window)
+    add_subdirectory(1_02_hello_triangle)
+    add_subdirectory(1_03_learn_shader)
+    add_subdirectory(1_04_learn_texture)
+    add_subdirectory(1_05_learn_glm)
+    add_subdirectory(1_06_learn_coordinate)
+    add_subdirectory(1_07_learn_camera)
 endif()
 
 # Chapter #2: Lightness
 if(BUILD_CHAPTER_ALL OR BUILD_CHAPTER2)
     message("Build targets in Chapter #2")
-    add_subdirectory(08_learn_color)
-    add_subdirectory(09_learn_lighting)
+    add_subdirectory(2_01_learn_color)
+    add_subdirectory(2_02_learn_lighting)
 endif()
 message("${BUILD_CHAPTER_ALL} - ${BUILD_CHAPTER1} - ${BUILD_CHAPTER2}")
 # # My Test
