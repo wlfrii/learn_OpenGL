@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     gl_util::Window window(WIN_WIDTH, WIN_HEIGHT);
     
     gl_util::Shader myshader;
-    myshader.load("../shaders/06.1.vs", "../shaders/06.1.fs");
+    myshader.load("../shaders/chapter_1/06.1.vs", "../shaders/chapter_1/06.1.fs");
     
     gl_util::VAVBEBO vavbebo;
     // --------------------------- Prase inputs -----------------------------

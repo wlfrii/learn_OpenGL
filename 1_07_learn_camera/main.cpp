@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     window.enableDepthTest();
 
     gl_util::Shader myshader;
-    myshader.load("../shaders/06.1.vs", "../shaders/06.1.fs");
+    myshader.load("../shaders/chapter_1/06.1.vs", "../shaders/chapter_1/06.1.fs");
     
     // --------------------------- Prase inputs -----------------------------
     unsigned char type = 0;

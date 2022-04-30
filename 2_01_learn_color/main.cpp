@@ -33,9 +33,9 @@ int main(int argc, char* argv[])
     glfwSetInputMode(window.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     gl_util::Shader light_shader;
-    light_shader.load("../shaders/08.1.vs", "../shaders/08.2.fs");
+    light_shader.load("../shaders/chapter_2/01.1.vs", "../shaders/chapter_2/01.2.fs");
     gl_util::Shader cube_shader;
-    cube_shader.load("../shaders/08.1.vs", "../shaders/08.1.fs");
+    cube_shader.load("../shaders/chapter_2/01.1.vs", "../shaders/chapter_2/01.1.fs");
 
     float vertices[] = {
         -0.5f, -0.5f, -0.5f, 

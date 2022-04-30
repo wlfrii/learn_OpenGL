@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     gl_util::Window window(800, 600);
 
     gl_util::Shader myshader;
-    myshader.load("../shaders/05.1.vs", "../shaders/05.1.fs");
+    myshader.load("../shaders/chapter_1/05.1.vs", "../shaders/chapter_1/05.1.fs");
 
     float vertices[] = {
         // positions         // texture coords

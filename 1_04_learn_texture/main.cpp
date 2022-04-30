@@ -24,16 +24,16 @@ int main(int argc, char* argv[])
     else{
         type = std::stoi(argv[1]);
         if(type == 1){
-            myshader.load("../shaders/04.1.vs", "../shaders/04.1.fs");         
+            myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.1.fs");         
         }
         else if(type == 2){
-            myshader.load("../shaders/04.1.vs", "../shaders/04.2.fs");
+            myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.2.fs");
         }
         else if(type == 3){
-            myshader.load("../shaders/04.1.vs", "../shaders/04.3.fs");
+            myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.3.fs");
         }
         else if(type == 4 || type == 5){
-            myshader.load("../shaders/04.1.vs", "../shaders/04.4.fs");
+            myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.4.fs");
         }
     }
     // -------------------------------------------------------------------------

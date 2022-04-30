@@ -26,9 +26,9 @@ int main(int argc, char* argv[])
     window.setKeyboardEventCallBack(processInput);
     
     gl_util::Shader light_shader;
-    light_shader.load("../shaders/09.2.vs", "../shaders/09.2.fs");
+    light_shader.load("../shaders/chapter_2/02.2.vs", "../shaders/chapter_2/02.2.fs");
     gl_util::Shader cube_shader;
-    cube_shader.load("../shaders/09.1.vs", "../shaders/09.1.fs");
+    cube_shader.load("../shaders/chapter_2/02.1.vs", "../shaders/chapter_2/02.1.fs");
 
     float vertices[] = {
         // Vertices           // Normals
