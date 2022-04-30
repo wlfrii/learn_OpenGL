@@ -15,13 +15,15 @@ uniform vec3 lightColor;
 // texture() -- retrieve texels from a texture at tex_coord position
 // and then store the texels in the corresponding samplerND
 
+// Reders to:
+// https://learnopengl-cn.github.io/02%20Lighting/02%20Basic%20Lighting/
 void main()
 {
     float ambient_strength = 0.1;
     vec3 ambient = ambient_strength * lightColor;
 
     vec3 norm = normalize(normal);
-    vec3 light_dir = normalize(light_pos - frag_pos);
+    vec3 light_dir = normalize(light_pos - frag_pos); 
     float diff = max(dot(norm, light_dir), 0.0);
     vec3 diffuse = diff * lightColor;
 
