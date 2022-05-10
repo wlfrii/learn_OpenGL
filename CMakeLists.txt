@@ -30,10 +30,9 @@ file(GLOB GL_UTIL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/gl_util/*.cpp)
 
 # The switch to control the compilation
 option(BUILD_CHAPTER_ALL "build all the project" ON)
-option(BUILD_CHAPTER1 "build chapter #1" OFF)
-option(BUILD_CHAPTER2 "build chapter #2" ON)
 
 # Chapter #1: Foundamental knowledge
+option(BUILD_CHAPTER1 "build chapter #1" OFF)
 if(BUILD_CHAPTER_ALL OR BUILD_CHAPTER1)
     message("Build targets in Chapter #1")
     add_subdirectory(1_01_hello_window)
@@ -46,12 +45,16 @@ if(BUILD_CHAPTER_ALL OR BUILD_CHAPTER1)
 endif()
 
 # Chapter #2: Lightness
+option(BUILD_CHAPTER2 "build chapter #2" OFF)
 if(BUILD_CHAPTER_ALL OR BUILD_CHAPTER2)
     message("Build targets in Chapter #2")
     add_subdirectory(2_01_learn_color)
     add_subdirectory(2_02_learn_lighting)
 endif()
-message("${BUILD_CHAPTER_ALL} - ${BUILD_CHAPTER1} - ${BUILD_CHAPTER2}")
-# # My Test
-# add_subdirectory(test_ar)
-# add_subdirectory(test_obj)
+
+# My practices
+option(BUILD_PRACTICE "build practices" OFF)
+if(BUILD_CHAPTER_ALL OR BUILD_PRACTICE)
+    add_subdirectory(test_AR)
+    add_subdirectory(test_model)
+endif()
