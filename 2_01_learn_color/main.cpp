@@ -28,9 +28,9 @@ int main(int argc, char* argv[])
     window.enableDepthTest();
     window.setKeyboardEventCallBack(processInput);
     
-    glfwSetCursorPosCallback(window.get(), mouseCallback);
-    glfwSetScrollCallback(window.get(), scrollCallback);
-    glfwSetInputMode(window.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(window.ptr(), mouseCallback);
+    glfwSetScrollCallback(window.ptr(), scrollCallback);
+    glfwSetInputMode(window.ptr(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     gl_util::Shader light_shader;
     light_shader.load("../shaders/chapter_2/01.1.vs", "../shaders/chapter_2/01.2.fs");

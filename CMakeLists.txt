@@ -26,7 +26,7 @@ include_directories(
 )
 
 # The GL utility sources
-file(GLOB GL_UTIL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/gl_util/*.cpp)
+file(GLOB GL_UTIL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/gl_util/gl_util/*.cpp)
 
 # The switch to control the compilation
 option(BUILD_CHAPTER_ALL "build all the project" ON)

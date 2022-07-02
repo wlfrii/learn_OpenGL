@@ -43,9 +43,9 @@ int main(int argc, char* argv[])
             window.setKeyboardEventCallBack(processInput);
         }
         if(type >= 3){
-            glfwSetScrollCallback(window.get(), scrollCallback);
-            glfwSetCursorPosCallback(window.get(), mouseCallback);
-            glfwSetInputMode(window.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            glfwSetScrollCallback(window.ptr(), scrollCallback);
+            glfwSetCursorPosCallback(window.ptr(), mouseCallback);
+            glfwSetInputMode(window.ptr(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         }
     }
     // ------------------------------------------------------------------------
