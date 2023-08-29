@@ -8,7 +8,7 @@ const unsigned int WIN_HEIGHT = 600;
 
 int main(int argc, char* argv[])
 {
-    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT);
+    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT, "Window");
     
     gl_util::Shader myshader;
     myshader.load("../shaders/chapter_1/06.1.vs", "../shaders/chapter_1/06.1.fs");

@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 {
     std::cout << proj_name << ":\n\tDisplay a square with specified color. There is also a light cube represent the light source. Using 'W-A-S-D-I-O' key or mouse to move camera view.\n";
     
-    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT);
+    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT, "Window");
     window.enableDepthTest();
     window.setKeyboardEventCallBack(processInput);
     

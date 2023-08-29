@@ -20,7 +20,7 @@ float prev_time = 0;
 
 int main(int argc, char* argv[])
 {
-    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT);
+    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT, "Window");
     window.enableDepthTest();
 
     gl_util::Shader myshader;

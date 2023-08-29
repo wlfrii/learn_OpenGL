@@ -6,7 +6,7 @@ std::string proj_name = "02_hello_triangle";
 
 int main(int argc, char* argv[])
 {
-    gl_util::Window window(800, 600);
+    gl_util::Window window(800, 600, "Window");
 
     gl_util::Shader myshader;
     myshader.load("../shaders/chapter_1/02.1.vs", "../shaders/chapter_1/02.1.fs"); 

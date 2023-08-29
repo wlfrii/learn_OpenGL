@@ -5,7 +5,7 @@ std::string proj_name = "04_learn_texture";
 
 int main(int argc, char* argv[])
 {
-    gl_util::Window window(800, 600);
+    gl_util::Window window(800, 600, "Window");
 
     gl_util::Shader myshader;
 

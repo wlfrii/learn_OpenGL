@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 {
     std::cout << proj_name << "\n\tSimilar to previous project. Display two square, one for model, and another for light source. This project consider the ambient light, diffuse, and specular reflection, so that the model looks more real. You can change the strength of these light effects in 0.9.1.vs to see the lighting effects.\n";
 
-    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT);
+    gl_util::Window window(WIN_WIDTH, WIN_HEIGHT, "Window");
     window.enableDepthTest();
     window.setKeyboardEventCallBack(processInput);
     

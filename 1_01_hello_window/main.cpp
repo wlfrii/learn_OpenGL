@@ -5,7 +5,7 @@ std::string proj_name = "01_hello_window";
 
 int main(int argc, char* argv[])
 {
-    gl_util::Window window(800, 600);
+    gl_util::Window window(800, 600, "Window");
 
     // --------------- Prase inputs ---------------
     if (argc <= 1){
