@@ -1,40 +1,42 @@
 #include <iostream>
 #include <gl_util.h>
 
-std::string proj_name = "04_learn_texture";
+std::string proj_name = "1_04_learn_texture";
 
 int main(int argc, char* argv[])
 {
-    gl_util::Window window(800, 600, "Window");
+    std::cout << proj_name << ":\n"
+        "\tYou can input a integer to specify the different shader model, "
+        "the supported interger are:\n"
+        "\t - 1, set vertices, colors, and texcoords when binding VAVBEBO, and transmit "
+        "texcoords from vertex shader to fragment shader. Then render a texture "
+        "(from image) w.r.t texcoords\n"
+        "\t - 2, based on # 1, transmit color from vertex shader to fragment shader, "
+        "and combine the texels color and vertices color\n"
+        "\t - 3, based on # 1, render two texture w.r.t texcoords and mix the color in "
+        "each pixel by 0.8*texture1 + 0.2*texture2\n"
+        "\t - 4, opposite the direction of texture2 in # 3\n"
+        "Press 'Esc' to exit.\n";
+    if (argc < 2) {        
+        return 0;
+    }
 
+    gl_util::Window window(800, 600, "Window");
     gl_util::Shader myshader;
 
     // --------------------------- Prase inputs -----------------------------
-    unsigned char type = 0;
-    // Check input
-    if(argc < 2)
-    {
-        std::cout << proj_name << ":\n\tYou can input a integer to specify the different shader model, the support interger are:\n" << 
-        "\t# 1, set vertices, colors, and texcoords when binding VAVBEBO, and transmit texcoords from vertex shader to fragment shader. Then render a texture (from image) w.r.t texcoords\n" << 
-        "\t# 2, based on # 1, transmit color from vertex shader to fragment shader, and combine the texels color and vertices color\n" <<
-        "\t# 3, based on # 1, render two texture w.r.t texcoords and mix the color in each pixel by 0.8*texture1 + 0.2*texture2\n" << 
-        "\t# 4, opposite the direction of texture2 in # 3\n";
-        return 0;
+    unsigned char type = std::stoi(argv[1]);
+    if(type == 1){
+        myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.1.fs");         
     }
-    else{
-        type = std::stoi(argv[1]);
-        if(type == 1){
-            myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.1.fs");         
-        }
-        else if(type == 2){
-            myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.2.fs");
-        }
-        else if(type == 3){
-            myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.3.fs");
-        }
-        else if(type == 4 || type == 5){
-            myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.4.fs");
-        }
+    else if(type == 2){
+        myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.2.fs");
+    }
+    else if(type == 3){
+        myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.3.fs");
+    }
+    else if(type == 4 || type == 5){
+        myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.4.fs");
     }
     // -------------------------------------------------------------------------
 
@@ -104,6 +106,7 @@ int main(int argc, char* argv[])
     }
 
     vavbebo.release();
+    myshader.release();
     window.release(); 
     
     return 0;

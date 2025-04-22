@@ -1,12 +1,12 @@
 #include <iostream>
 #include <gl_util.h>
 
-std::string proj_name = "07_learn_camera";
+std::string proj_name = "1_07_learn_camera";
 
 const unsigned int WIN_WIDTH = 800;
 const unsigned int WIN_HEIGHT = 600;
 
- void processInput(GLFWwindow *window);
+void processInput(GLFWwindow *window);
 void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
@@ -17,9 +17,21 @@ float yprev = WIN_HEIGHT / 2;
 float delta_time = 0;
 float prev_time = 0;
 
-
 int main(int argc, char* argv[])
 {
+    std::cout << proj_name << ":\n"
+        "\tYou can input a integer to specify the different shader model, "
+        "the supported interger are:\n"
+        "\t - 1, display square in dynamic view \n"
+        "\t - 2, render 10 stationary square, using keyboard 'W-A-S-D-I-O' to move "
+        "the GL camera position to 'UP-DOWN-LEFT-RIGHT-FORWARD-BACKWARD'\n"
+        "\t - 3, render 10 stationry square, using mouse movement to change the "
+        "orientation of camera view, and use mouse scroll to change the FOV\n"
+        "Press 'Esc' to exit.\n";
+    if(argc < 2) {
+        return 0;
+    }
+
     gl_util::Window window(WIN_WIDTH, WIN_HEIGHT, "Window");
     window.enableDepthTest();
 
@@ -27,26 +39,14 @@ int main(int argc, char* argv[])
     myshader.load("../shaders/chapter_1/06.1.vs", "../shaders/chapter_1/06.1.fs");
     
     // --------------------------- Prase inputs -----------------------------
-    unsigned char type = 0;
-    // Check input
-    if(argc < 2)
-    {
-        std::cout << proj_name << ":\n\tYou can input a integer to specify the different shader model, the support interger are:\n" << 
-        "\t# 1, display square in dynamic view \n" << 
-        "\t# 2, render 10 stationary square, using keyboard 'W-A-S-D-I-O' to move the GL camera position to 'UP-DOWN-LEFT-RIGHT-FORWARD-BACKWARD'\n" <<
-        "\t# 3, render 10 stationry square, using mouse movement to change the orientation of camera view, and use mouse scroll to change the FOV\n";
-        return 0;
+    unsigned char type = std::stoi(argv[1]);
+    if(type == 2){
+        window.setKeyboardEventCallBack(processInput);
     }
-    else{
-        type = std::stoi(argv[1]);
-        if(type == 2){
-            window.setKeyboardEventCallBack(processInput);
-        }
-        if(type >= 3){
-            glfwSetScrollCallback(window.ptr(), scrollCallback);
-            glfwSetCursorPosCallback(window.ptr(), mouseCallback);
-            glfwSetInputMode(window.ptr(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        }
+    if(type >= 3){
+        glfwSetScrollCallback(window.ptr(), scrollCallback);
+        glfwSetCursorPosCallback(window.ptr(), mouseCallback);
+        glfwSetInputMode(window.ptr(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
     // ------------------------------------------------------------------------
     
@@ -202,6 +202,7 @@ int main(int argc, char* argv[])
         window.refresh();
     }
     vavbebo.release();
+    myshader.release();
     window.release();
     
     return 0;

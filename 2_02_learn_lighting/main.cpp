@@ -1,7 +1,7 @@
 #include <iostream>
 #include <gl_util.h>
 
-std::string proj_name = "09_learn_lighting";
+std::string proj_name = "2_02_learn_lighting";
 
 const unsigned int WIN_WIDTH = 800;
 const unsigned int WIN_HEIGHT = 600;
@@ -16,10 +16,14 @@ float delta_time = 0;
 float prev_time = 0;
 float fov = 45.0f;
 
-
 int main(int argc, char* argv[])
 {
-    std::cout << proj_name << "\n\tSimilar to previous project. Display two square, one for model, and another for light source. This project consider the ambient light, diffuse, and specular reflection, so that the model looks more real. You can change the strength of these light effects in 0.9.1.vs to see the lighting effects.\n";
+    std::cout << proj_name << "\n"
+        "\tSimilar to previous project. Display two square, one for model, and another "
+        "for light source. This project consider the ambient light, diffuse, and "
+        "specular reflection, so that the model looks more real. You can change the "
+        "strength of these light effects in 0.9.1.vs to see the lighting effects.\n"
+        "Press 'Esc' to exit.\n";
 
     gl_util::Window window(WIN_WIDTH, WIN_HEIGHT, "Window");
     window.enableDepthTest();
@@ -130,7 +134,9 @@ int main(int argc, char* argv[])
     }
 
     light_vavbo.release();
+    light_shader.release();
     cube_vavbo.release();
+    cube_shader.release();
     window.release();
 
     return 0;

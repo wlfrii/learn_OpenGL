@@ -2,40 +2,41 @@
 #include <iostream>
 #include <gl_util.h>
 
-std::string proj_name = "03_learn_shader";
+std::string proj_name = "1_03_learn_shader";
 
 int main(int argc, char* argv[])
 {
+    std::cout << proj_name << ":\n" << 
+        "\tYou can input a integer to specify the different shader model, "
+        "the supported interger are:\n"
+        "\t - 1, use default color in vertex shader, and transmit it to fragment shader\n" 
+        "\t - 2, set dynamic color to fragment shader\n"
+        "\t - 3, set color when bind VAVBEBO and transmit the color from vertex shader "
+        "to fragment shader\n"
+        "\t - 4, based on 3, set deviation for x position of object in vertex shader\n"
+        "Press 'Esc' to exit.\n";
+    if (argc < 2) {        
+        return 0;
+    }
+
     gl_util::Window window(800, 600, "Window");
 
     gl_util::Shader myshader;
     gl_util::VAVBEBO vavbebo;
     
     // --------------------------- Prase inputs -----------------------------
-    unsigned char type = 0;
-    if(argc < 2)
-    {
-        std::cout << proj_name << ":\n\tYou can input a integer to specify the different shader model, the support interger are:\n" << 
-        "\t# 1, use default color in vertex shader, and transmit it to fragment shader\n" << 
-        "\t# 2, set dynamic color to fragment shader\n" <<
-        "\t# 3, set color when bind VAVBEBO and transmit the color from vertex shader to fragment shader\n" << 
-        "\t# 4, based on 3, set deviation for x position of object in vertex shader\n";
-        return 0;
+    unsigned char type = std::stoi(argv[1]);
+    if(type == 1){
+        myshader.load("../shaders/chapter_1/03.1.vs", "../shaders/chapter_1/03.1.fs");
     }
-    else{
-        type = std::stoi(argv[1]);
-        if(type == 1){
-            myshader.load("../shaders/chapter_1/03.1.vs", "../shaders/chapter_1/03.1.fs");
-        }
-        else if(type == 2){
-            myshader.load("../shaders/chapter_1/03.1.vs", "../shaders/chapter_1/03.2.fs"); 
-        }
-        else if(type == 3){
-            myshader.load("../shaders/chapter_1/03.3.vs", "../shaders/chapter_1/03.3.fs"); 
-        }
-        else if(type == 4){
-            myshader.load("../shaders/chapter_1/03.4.vs", "../shaders/chapter_1/03.3.fs"); 
-        }
+    else if(type == 2){
+        myshader.load("../shaders/chapter_1/03.1.vs", "../shaders/chapter_1/03.2.fs"); 
+    }
+    else if(type == 3){
+        myshader.load("../shaders/chapter_1/03.3.vs", "../shaders/chapter_1/03.3.fs"); 
+    }
+    else if(type == 4){
+        myshader.load("../shaders/chapter_1/03.4.vs", "../shaders/chapter_1/03.3.fs"); 
     }
     // -------------------------------------------------------------------------
     

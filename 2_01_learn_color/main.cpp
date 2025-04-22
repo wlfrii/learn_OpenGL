@@ -1,16 +1,14 @@
 #include <iostream>
 #include <gl_util.h>
 
-std::string proj_name = "08_learn_color";
+std::string proj_name = "2_01_learn_color";
 
 const unsigned int WIN_WIDTH = 800;
 const unsigned int WIN_HEIGHT = 600;
 
-
 void processInput(GLFWwindow *window);
 void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
-
 
 gl_util::Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float xprev = WIN_WIDTH / 2;
@@ -22,7 +20,10 @@ float fov = 45.0f;
 
 int main(int argc, char* argv[])
 {
-    std::cout << proj_name << ":\n\tDisplay a square with specified color. There is also a light cube represent the light source. Using 'W-A-S-D-I-O' key or mouse to move camera view.\n";
+    std::cout << proj_name << ":\n"
+        "\tDisplay a square with specified color. There is also a light cube represent "
+        "the light source. Using 'W-A-S-D-I-O' key or mouse to move camera view.\n"
+        "Press 'Esc' to exit.\n";
     
     gl_util::Window window(WIN_WIDTH, WIN_HEIGHT, "Window");
     window.enableDepthTest();
@@ -127,7 +128,9 @@ int main(int argc, char* argv[])
     }
 
     light_vavbo.release();
+    light_shader.release();
     cube_vavbo.release();
+    cube_shader.release();
     window.release();
 
     return 0;
