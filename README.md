@@ -13,17 +13,11 @@ To better understand GLSL, the website below are optional.
 
 ### Write in Front
 
-+ GLFM: [https://www.glfw.org/download.html](https://www.glfw.org/download.html)
 + GLAD: [https://glad.dav1d.de/](https://glad.dav1d.de/)
++ GLFM: [https://www.glfw.org/download.html](https://www.glfw.org/download.html)
 + GLM:  [https://glm.g-truc.net/0.9.9/index.html](https://glm.g-truc.net/0.9.9/index.html)
 
-After learning the basic part of OpenGL, I find that there are excessive similar even same codes when doing the practices frome the online chapter, so I refactor those codes into [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gl_util) folder.
-
-The [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gl_util) will be very helpful to the later practices, including:
- + [`gl_util::Window`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_util/gl_window.h). A class degsigned to manage GLFWwindow.
- + [`gl_util::VAVBEBO`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_util/gl_vavbebo.h) A manager for VAO, VBO, and EBO.
- + [`gl_util::Shader`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_util/gl_shader.h) A manager for shader program object.
- + [`gl_util::Texture2D`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_util/gl_texture.h) A manager for the GL texture.
+After learning the basic part of OpenGL, I find that there are excessive similar even same codes when doing the practices frome the online chapter, so I refactor those codes into [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gl_util) folder. More details could be found in the folder.
 
 ### About practices
 
