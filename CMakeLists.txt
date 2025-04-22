@@ -40,6 +40,7 @@ endif()
 # My practices
 option(BUILD_PRACTICE "build practices" ON)
 if(BUILD_CHAPTER_ALL OR BUILD_PRACTICE)
+    add_subdirectory(test_multi_window)
     # add_subdirectory(test_AR)
     # add_subdirectory(test_model)
     # add_subdirectory(test_points3D)
