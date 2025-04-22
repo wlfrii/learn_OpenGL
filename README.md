@@ -13,9 +13,9 @@ To better understand GLSL, the website below are optional.
 
 ### Write in Front
 
-After learning the basic part of OpenGL, I find that there are excessive similar even same codes when doing the practices frome the online chapter, so I refactor those codes into [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gll_util) folder.
+After learning the basic part of OpenGL, I find that there are excessive similar even same codes when doing the practices frome the online chapter, so I refactor those codes into [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gl_util) folder.
 
-The [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gll_util) will be very helpful to the later practices, including:
+The [gl_util](https://github.com/wlfrii/learn_OpenGL/tree/main/gl_util) will be very helpful to the later practices, including:
  + [`gl_util::Window`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_window.h). A class degsigned to manage GLFWwindow.
  + [`gl_util::VAVBEBO`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_vavbebo.h) A manager for VAO, VBO, and EBO.
  + [`gl_util::Shader`](https://github.com/wlfrii/learn_OpenGL/blob/main/gl_util/gl_shader.h) A manager for shader program object.
