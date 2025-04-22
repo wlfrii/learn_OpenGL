@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../gl_util/gl_util.h"
+#include <gl_util.h>
 
 std::string proj_name = "07_learn_camera";
 

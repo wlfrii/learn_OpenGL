@@ -4,12 +4,5 @@ project(learn_camera)
 
 add_executable(${PROJECT_NAME}
     main.cpp
-    ${GLAD_PATH}/src/glad.c
-    ${GL_UTIL_SRC}
 )
-
-
-# Add libraries
-target_link_libraries(${PROJECT_NAME} 
-    glfw
-)
+target_link_libraries(${PROJECT_NAME} PRIVATE gl_util)

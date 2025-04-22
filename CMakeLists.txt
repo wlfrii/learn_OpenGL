@@ -7,26 +7,11 @@ set(CMAKE_BUILD_TYPE "RELEASE")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY 	${CMAKE_BINARY_DIR}/app)
 
-# Include GLFW
-find_package(glfw3 REQUIRED)
-
-# Include neccessary path
-set(PATH_3RDPARTY "${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/")
-
-set(GLAD_PATH ${PATH_3RDPARTY}glad/ CACHE INTERNAL "GLAD path")
-
-set(INC_PATH ${GLAD_PATH}include/ CACHE INTERNAL "include path")
-list(APPEND INC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/gl_util/")
-list(APPEND INC_PATH ${PATH_3RDPARTY}stb_image/)
-list(APPEND INC_PATH ${PATH_3RDPARTY}glm/)
-# message("Include path: ${INC_PATH}")
-
-include_directories(
-    ${INC_PATH}
-)
-
 # The GL utility sources
-file(GLOB GL_UTIL_SRC ${CMAKE_CURRENT_SOURCE_DIR}/gl_util/gl_util/*.cpp)
+add_subdirectory(gl_util)
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/gl_util/include
+)
 
 # The switch to control the compilation
 option(BUILD_CHAPTER_ALL "build all the project" ON)
@@ -55,7 +40,7 @@ endif()
 # My practices
 option(BUILD_PRACTICE "build practices" ON)
 if(BUILD_CHAPTER_ALL OR BUILD_PRACTICE)
-    add_subdirectory(test_AR)
-    add_subdirectory(test_model)
-    add_subdirectory(test_points3D)
+    # add_subdirectory(test_AR)
+    # add_subdirectory(test_model)
+    # add_subdirectory(test_points3D)
 endif()
