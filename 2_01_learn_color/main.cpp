@@ -127,12 +127,6 @@ int main(int argc, char* argv[])
         window.refresh();
     }
 
-    light_vavbo.release();
-    light_shader.release();
-    cube_vavbo.release();
-    cube_shader.release();
-    window.release();
-
     return 0;
 }
 

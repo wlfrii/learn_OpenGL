@@ -104,10 +104,6 @@ int main(int argc, char* argv[])
 
         window.refresh();
     }
-
-    vavbebo.release();
-    myshader.release();
-    window.release(); 
     
     return 0;
 }

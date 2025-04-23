@@ -35,7 +35,6 @@ int main(int argc, char* argv[])
         
         window.refresh();
     }
-    window.release();
 
     return 0;
 }
