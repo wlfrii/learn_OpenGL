@@ -27,17 +27,7 @@ int main(int argc, char* argv[])
         1, 2, 3  // second triangle
     };
     gl_util::VAVBEBO vavbebo;
-    vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
-
-    // ------------------------------------------------------------------------
-
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
+    vavbebo.bind(vertices, sizeof(vertices), {3, 2}, indices, sizeof(indices));
 
     // load and create a texture 
     // -------------------------

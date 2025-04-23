@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     gl_util::VAVBEBO vavbebo;
     
     // --------------------------- Prase inputs -----------------------------
-    unsigned char type = std::stoi(argv[1]);
+    unsigned char type = std::min(std::stoi(argv[1]), 4);
     if(type == 1){
         myshader.load("../shaders/chapter_1/03.1.vs", "../shaders/chapter_1/03.1.fs");
     }
@@ -46,10 +46,7 @@ int main(int argc, char* argv[])
             0.5f, -0.5f, 0.0f,
             0.0f,  0.5f, 0.0f
         };
-        vavbebo.bind(vertices, sizeof(vertices));
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-        // Activate the VertexArrtrib by the position
-        glEnableVertexAttribArray(0);
+        vavbebo.bind(vertices, sizeof(vertices), {3});
     }
     else if(type == 3 || type == 4)
     {
@@ -59,13 +56,7 @@ int main(int argc, char* argv[])
            -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
             0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top
         };
-        vavbebo.bind(vertices, sizeof(vertices));
-        // Position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-        // Color attribute
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
-        glEnableVertexAttribArray(1);
+        vavbebo.bind(vertices, sizeof(vertices), {3, 3});
     }
     // -------------------------------------------------------------------------
 

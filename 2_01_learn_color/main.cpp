@@ -77,14 +77,10 @@ int main(int argc, char* argv[])
         -0.5f,  0.5f, -0.5f
     };
     gl_util::VAVBEBO light_vavbo;
-    light_vavbo.bind(vertices, sizeof(vertices));
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    light_vavbo.bind(vertices, sizeof(vertices), {3});
     
     gl_util::VAVBEBO cube_vavbo;
-    cube_vavbo.bind(vertices, sizeof(vertices));
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    cube_vavbo.bind(vertices, sizeof(vertices), {3});
 
     // render loop
     // -----------

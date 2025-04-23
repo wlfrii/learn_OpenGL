@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     gl_util::Shader myshader;
 
     // --------------------------- Prase inputs -----------------------------
-    unsigned char type = std::stoi(argv[1]);
+    unsigned char type = std::min(std::stoi(argv[1]), 4);
     if(type == 1){
         myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.1.fs");         
     }
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     else if(type == 3){
         myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.3.fs");
     }
-    else if(type == 4 || type == 5){
+    else if(type == 4){
         myshader.load("../shaders/chapter_1/04.1.vs", "../shaders/chapter_1/04.4.fs");
     }
     // -------------------------------------------------------------------------
@@ -52,20 +52,7 @@ int main(int argc, char* argv[])
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
-    vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
-
-    // ------------------------------------------------------------------------
-
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
-
+    vavbebo.bind(vertices, sizeof(vertices), {3, 3, 2}, indices, sizeof(indices));
 
     // load and create a texture 
     // -------------------------

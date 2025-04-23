@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
             0, 1, 3, // first triangle
             1, 2, 3  // second triangle
         };   
-        vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
+        vavbebo.bind(vertices, sizeof(vertices), {3, 2}, indices, sizeof(indices));
     }
     else if(type >= 2){
         float vertices[] = {
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
             -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
             -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
         };
-        vavbebo.bind(vertices, sizeof(vertices));
+        vavbebo.bind(vertices, sizeof(vertices), {3, 2});
 
         if(type >= 3){
             // glEnable() and glDisable() allows we enable or disable a function
@@ -100,14 +100,6 @@ int main(int argc, char* argv[])
         }
     }  
     // ------------------------------------------------------------------------
-
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
 
     // load and create a texture 
     // -------------------------

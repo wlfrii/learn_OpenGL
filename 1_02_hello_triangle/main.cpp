@@ -29,13 +29,13 @@ int main(int argc, char* argv[])
     // --------------------------- Prase inputs -----------------------------
     // Set up vertex data (and buffers) and configure vertex attributes based on the input
     unsigned int type = std::stoi(argv[1]);
-    if(type == 1){ // ------------------------------
+    if(type == 1){ 
         float vertices[] = {
             -0.5f, -0.5f, 0.0f,
             0.5f, -0.5f, 0.0f,
             0.0f,  0.5f, 0.0f
         };
-        vavbebo.bind(vertices, sizeof(vertices));
+        vavbebo.bind(vertices, sizeof(vertices), {3});
     }
     else if(type == 2 || type == 3){ 
         float vertices[] = {
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
             0, 1, 3, // fist triangle
             1, 2, 3  // second triangle
         };
-        vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
+        vavbebo.bind(vertices, sizeof(vertices), {3}, indices, sizeof(indices));
     }
     else{
         float vertices[] = {
@@ -62,12 +62,9 @@ int main(int argc, char* argv[])
             0, 1, 2,
             2, 3, 4
         };
-        vavbebo.bind(vertices, sizeof(vertices), indices, sizeof(indices));
+        vavbebo.bind(vertices, sizeof(vertices), {3}, indices, sizeof(indices));
     }
     // -------------------------------------------------------------------------
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
 
     while(!window.shouldClose()){
         gl_util::clear();
@@ -91,6 +88,6 @@ int main(int argc, char* argv[])
 
         window.refresh();
     }
-    
+
     return 0;
 }

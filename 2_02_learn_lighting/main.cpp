@@ -79,16 +79,10 @@ int main(int argc, char* argv[])
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
     };
     gl_util::VAVBEBO light_vavbo;
-    light_vavbo.bind(vertices, sizeof(vertices));
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    light_vavbo.bind(vertices, sizeof(vertices), {3, 3});
     
     gl_util::VAVBEBO cube_vavbo;
-    cube_vavbo.bind(vertices, sizeof(vertices));
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+    cube_vavbo.bind(vertices, sizeof(vertices), {3, 3});
 
 
     glm::vec3 light_pos(0.2f, 0.0f, 2.0f);
