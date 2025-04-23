@@ -64,8 +64,8 @@ int main(int argc, char* argv[])
     myshader.use();
 
     while(!window.shouldClose()){
-        gl_util::clear();
         window.activate();
+        window.clear();
 
         // Draw
         if(type == 2){

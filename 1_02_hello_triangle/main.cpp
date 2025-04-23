@@ -67,9 +67,8 @@ int main(int argc, char* argv[])
     // -------------------------------------------------------------------------
 
     while(!window.shouldClose()){
-        gl_util::clear();
-
         window.activate();
+        window.clear();
 
         // Draw
         myshader.use();
