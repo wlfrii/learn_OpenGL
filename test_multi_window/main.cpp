@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
     gl_util::VAVBEBO vavbebo2;
     vavbebo2.bind(vertices, sizeof(vertices), {3, 2});
 
-    while(!window1.shouldClose() || !window2.shouldClose()){
+    while(!window1.shouldClose()) {// || !window2.shouldClose()){
         window1.clear();
         texture0.bind();
         texture1.bind();
@@ -124,6 +124,8 @@ int main(int argc, char* argv[])
 
         glfwPollEvents();
     }
+
+    window1.activate();
 
     return 0;
 }
