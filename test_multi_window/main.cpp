@@ -1,59 +1,128 @@
 #include <stdio.h>
 #include <iostream>
 #include <gl_util.h>
+#include <vector>
 
 std::string proj_name = "test_multi_window";
+
+float vertices[] = {
+    // positions         // texture coords
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+    0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+};
+
+std::vector<glm::vec3> cube_positions = {
+    glm::vec3( 0.0f,  0.0f,  0.0f), 
+    glm::vec3( 6.5f,  1.0f, -15.0f),
+    glm::vec3(-1.2f, -1.2f, -2.5f), 
+    glm::vec3(-4.8f, -1.0f, -12.3f),
+    glm::vec3( 2.4f, -0.4f, -3.5f), 
+    glm::vec3(-0.7f,  3.1f, -7.5f),
+    glm::vec3( 1.3f, -1.7f, -3.5f),
+    glm::vec3( 1.5f,  2.0f, -4.0f),
+    glm::vec3(-1.5f,  1.0f, -3.0f) 
+};
 
 int main(int argc, char* argv[])
 {
     std::cout << proj_name << ":\n" << 
-        "\tShow two GL windows, one render rectangle consists of two triangles with "
-        "VAO, VBO, and EBO, another render the polygons render of rectangle\n"
+        "\tShow two GL windows for multi window test.\n"
         "Press 'Esc' to exit.\n";
 
-    gl_util::Window window1(800, 600, "Window");
-    gl_util::Window window2(600, 600, "Window");
+    gl_util::Window window1(800, 600, "Window1", true);
+    window1.enableDepthTest();
+    gl_util::VAVBEBO vavbebo1;
+    vavbebo1.bind(vertices, sizeof(vertices), {3, 2});
 
-    gl_util::Shader shader1, shader2;
-    shader1.load("../shaders/chapter_1/02.1.vs", "../shaders/chapter_1/02.1.fs"); 
-    shader2.load("../shaders/chapter_1/02.1.vs", "../shaders/chapter_1/02.1.fs"); 
+    gl_util::Texture2D texture0(0);
+    if( !texture0.loadImage("../resources/container.jpg"))  return -2;
+    gl_util::Texture2D texture1(1);
+    if( !texture1.loadImage("../resources/awesomeface.png"))  return -2;
+    glm::mat4 I4(1.0f), model, view, projection;
+    model = glm::rotate(I4, glm::radians(-55.0f), glm::vec3(1.0, 0.0, 0.0));
+    view = glm::translate(I4, glm::vec3(0.0f, 0.0f, -3.0f));
+    projection = glm::perspective(glm::radians(45.0f), float(8)/float(6), 0.2f, 100.0f); 
+    
+    gl_util::Shader shader1;
+    shader1.load("../shaders/chapter_1/06.1.vs", "../shaders/chapter_1/06.1.fs");
+    shader1.use(); // don't forget to activate/use the shader before setting uniforms!
+    shader1.setInt("texture1", texture0.ID());
+    shader1.setInt("texture2", texture1.ID());    
+    shader1.setMat4f("model", model);
+    shader1.setMat4f("view", view);
+    shader1.setMat4f("projection", projection);
 
-    // Create vao, vbo, ebo to bind the vertices
-    gl_util::VAVBEBO vavbebo1, vavbebo2;
+    gl_util::Window window2(600, 600, "Window2", true);
+    window2.enableDepthTest();
+    gl_util::VAVBEBO vavbebo2;
+    vavbebo2.bind(vertices, sizeof(vertices), {3, 2});
 
-    float vertices[] = {
-        0.5f, 0.5f, 0.0f,   // right top
-        0.5f, -0.5f, 0.0f,  // right bottom
-        -0.5f, -0.5f, 0.0f, // left bottom
-        -0.5f, 0.5f, 0.0f   // left top
-    };
-    unsigned int indices[] = {
-        0, 1, 3, // fist triangle
-        1, 2, 3  // second triangle
-    };
-    vavbebo1.bind(vertices, sizeof(vertices), indices, sizeof(indices));
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    vavbebo2.bind(vertices, sizeof(vertices), indices, sizeof(indices));
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    while(!window1.shouldClose() && !window2.shouldClose()){
-        gl_util::clear();
-
-        window1.activate();
+    while(!window1.shouldClose() || !window2.shouldClose()){
+        window1.clear();
+        texture0.bind();
+        texture1.bind();
         shader1.use();
         vavbebo1.bindVertexArray();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // use this when EBO exist
-
-        window2.activate();
-        shader2.use();
-        vavbebo2.bindVertexArray();
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        
+        model = glm::rotate(I4, glm::radians(50.0f)*float(glfwGetTime()), glm::vec3(0.5, 1.0, 0.0));
+        shader1.setMat4f("model", model);    
+        glDrawArrays(GL_TRIANGLES, 0, 36);
         window1.refresh();
+
+        window2.clear();
+        texture0.bind();
+        texture1.bind();
+        shader1.use();
+        vavbebo2.bindVertexArray();
+        for(unsigned int i = 0; i < cube_positions.size(); i++) {
+            model = glm::translate(I4, cube_positions[i]);
+            float k = static_cast<float>(glfwGetTime());
+            float angle = glm::radians(20.0f * (i + 1)) * k; 
+            model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
+            shader1.setMat4f("model", model);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
         window2.refresh();
+
+        glfwPollEvents();
     }
 
     return 0;
