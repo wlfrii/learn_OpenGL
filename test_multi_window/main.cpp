@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
     shader1.setMat4f("projection", projection);
 
     gl_util::Window window2(600, 600, "Window2", true);
-    window2.enableDepthTest();
+    // window2.enableDepthTest();
     gl_util::VAVBEBO vavbebo2;
     vavbebo2.bind(vertices, sizeof(vertices), {3, 2});
 
