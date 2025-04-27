@@ -1,0 +1,3 @@
+[submodule "lib_gl_util"]
+	path = lib_gl_util
+	url = git@lf.github.com:wlfrii/lib_gl_util.git
